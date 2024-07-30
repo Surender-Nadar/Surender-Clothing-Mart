@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="Image/Home/Surender.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Surender Clothing Mart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section id="header">
+        <a href="#"><img src="Image/Home/logosurender.png" class="logo" alt="Surender Clothing Mart Logo"></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="active" href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+            </ul>
+        </div>
+    </section>
+    <section id="cart">
+        <h1>Shopping Cart</h1>
+        <div id="cart-items"></div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Function to display cart items
+        function displayCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-details">
+                        <h5>${item.name}</h5>
+                        <p>${item.price}</p>
+                    </div>
+                    <button class="remove-btn" data-index="${index}">Remove</button>
+                </div>
+            `).join('');
+
+            // Add event listeners for Remove buttons
+            document.querySelectorAll('.remove-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    removeFromCart(index);
+                    displayCart(); // Refresh the cart display
+                });
+            });
+        }
+
+        // Function to remove item from cart
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Load cart items on page load
+        document.addEventListener('DOMContentLoaded', displayCart);
+    </script>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img src="Image/Home/logosurender.png" alt="" class="logo logo1">
+            <h4>Contact</h4>
+            <p><strong>Address:</strong> Sion, Mumbai, Maharashtra</p>
+            <p><strong>Phone:</strong> +91 7045164903</p>
+            <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+            <div class="follow">
+                <h4>Follow us</h4>
+                <div class="icon">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-linkedin"></i>
+                    <i class="fa-brands fa-youtube"></i>                
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <h4>About</h4>
+            <a href="about.html">About Us</a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign In</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+
+        <div class="col install">
+            <h4>Install App</h4>
+            <p>From App Store or Google Play</p>
+            <div class="row">
+                <img src="Image/pay/app.jpg" alt="">
+                <img src="Image/pay/play.jpg" alt="">
+            </div>
+
+            <p>Secured Payment Gateways</p>
+            <img src="Image/pay/pay.png" alt="">
+        </div>
+
+        <div class="copyright">
+            <p>© 2024, Surender Nadar - Clothing Website</p>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/9cfccc1679.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
